@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 เครื่องมือบันทึกรายจ่าย</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>💰 เครื่องมือบันทึกรายจ่าย</h1>
+            <p class="subtitle">จัดการรายจ่ายประจำวันได้ง่ายๆ</p>
+        </header>
+
+        <main class="main-content">
+            <div class="budget-card">
+                <div class="budget-info">
+                    <div class="budget-item">
+                        <span class="label">งบประจำวัน</span>
+                        <span class="value" id="budget-display">¥1,000</span>
+                    </div>
+                    <div class="budget-item">
+                        <span class="label">ใช้ไปแล้ววันนี้</span>
+                        <span class="value" id="today-spent">¥0</span>
+                    </div>
+                    <div class="budget-item">
+                        <span class="label">งบคงเหลือ</span>
+                        <span class="value" id="remaining-budget">¥1,000</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <button class="edit-budget-btn" id="edit-budget-btn">✏️ แก้ไขงบประมาณ</button>
+            </div>
+
+            <div class="add-expense-section">
+                <h2>📝 เพิ่มรายจ่าย</h2>
+                <form id="expense-form" class="expense-form">
+                    <div class="form-group">
+                        <label for="category">ประเภท</label>
+                        <select id="category" required>
+                            <option value="">โปรดเลือกประเภท</option>
+                            <option value="餐饮">🍔 อาหาร</option>
+                            <option value="交通">🚗 ค่าเดินทาง</option>
+                            <option value="购物">🛒 ช้อปปิ้ง</option>
+                            <option value="娱乐">🎮 บันเทิง</option>
+                            <option value="医疗">🏥 การแพทย์</option>
+                            <option value="其他">📦 อื่นๆ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">จำนวนเงิน</label>
+                        <input type="number" id="amount" step="0.01" min="0.01" required placeholder="โปรดใส่จำนวนเงิน">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">หมายเหตุ</label>
+                        <input type="text" id="description" placeholder="เพิ่มหมายเหตุ (ไม่จำเป็น)">
+                    </div>
+                    <button type="submit" class="submit-btn">➕ เพิ่มรายจ่าย</button>
+                </form>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="today">รายการวันนี้</button>
+                <button class="tab-btn" data-tab="history">ประวัติรายการ</button>
+                <button class="tab-btn" data-tab="stats">วิเคราะห์สถิติ</button>
+            </div>
+
+            <div class="tab-content" id="today-tab">
+                <div class="expenses-list" id="today-expenses-list"></div>
+                <div class="empty-state" id="today-empty" style="display: none;">
+                    <p>📭 ยังไม่มีรายการรายจ่ายวันนี้</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="history-tab" style="display: none;">
+                <div class="expenses-list" id="history-expenses-list"></div>
+                <div class="empty-state" id="history-empty" style="display: none;">
+                    <p>📭 ยังไม่มีประวัติรายการรายจ่าย</p>
+                </div>
+            </div>
+
+            <div class="tab-content" id="stats-tab" style="display: none;">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>รายจ่ายทั้งหมด</h3>
+                        <p class="stat-value" id="total-spent">¥0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>จำนวนรายการ</h3>
+                        <p class="stat-value" id="total-count">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>เฉลี่ยต่อวัน</h3>
+                        <p class="stat-value" id="avg-daily">¥0</p>
+                    </div>
+                </div>
+                <div class="category-stats" id="category-stats"></div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal" id="budget-modal">
+        <div class="modal-content">
+            <h2>แก้ไขงบประมาณ</h2>
+            <input type="number" id="new-budget" step="1" min="1" placeholder="โปรดใส่งบประมาณใหม่">
+            <div class="modal-buttons">
+                <button class="cancel-btn" id="cancel-budget">ยกเลิก</button>
+                <button class="save-btn" id="save-budget">บันทึก</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
